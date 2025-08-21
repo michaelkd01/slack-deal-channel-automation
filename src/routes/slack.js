@@ -101,17 +101,50 @@ router.get('/oauth_redirect', async (req, res) => {
   try {
     await installer.handleCallback(req, res, {
       success: (installation, options, req, res) => {
+        console.log('Slack installation successful:', {
+          team: installation.team,
+          bot: installation.bot.userId,
+          user: installation.user.id
+        });
+        
         res.send(`
           <html>
-            <body>
-              <h1>Success!</h1>
-              <p>Slack app installed successfully. You can close this window.</p>
-              <script>
-                setTimeout(() => {
-                  window.location.href = '${process.env.FRONTEND_URL || 'http://localhost:3001'}';
-                }, 2000);
-              </script>
-            </body>
+          <head>
+            <title>Slack Integration Success</title>
+            <style>
+              body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+              .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+              .success { color: #4CAF50; }
+              .info { background: #e3f2fd; padding: 15px; border-radius: 4px; margin: 20px 0; }
+              .button { background: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin: 10px 5px; }
+              .button:hover { background: #45a049; }
+              .api-button { background: #2196F3; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1 class="success">🎉 Success!</h1>
+              <p>Slack app installed successfully for workspace: <strong>${installation.team.name}</strong></p>
+              
+              <div class="info">
+                <h3>What's Next?</h3>
+                <p>Your Slack workspace is now connected! You can:</p>
+                <ul>
+                  <li>Create deal channels with consistent naming</li>
+                  <li>Automatically add team members to channels</li>
+                  <li>Post deal information templates</li>
+                  <li>Use API endpoints for Salesforce integration</li>
+                </ul>
+              </div>
+              
+              <h3>Quick Actions:</h3>
+              <a href="/api/debug/workspaces" class="button api-button">View Connected Workspaces</a>
+              <a href="/api/slack/workspaces" class="button api-button">Test API</a>
+              <a href="/" class="button">Back to Home</a>
+              
+              <p><small>Team ID: ${installation.team.id}</small></p>
+            </div>
+          </body>
           </html>
         `);
       },

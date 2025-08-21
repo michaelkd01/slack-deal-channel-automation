@@ -95,5 +95,16 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Debug endpoint to check connected workspaces
+app.get('/api/debug/workspaces', async (req, res) => {
+  try {
+    const db = require('../src/models');
+    const workspaces = await db.Workspace.findAll();
+    res.json({ workspaces: workspaces.map(w => ({ id: w.id, name: w.slackTeamName, teamId: w.slackTeamId })) });
+  } catch (error) {
+    res.json({ error: error.message, workspaces: [] });
+  }
+});
+
 // For Vercel, we need to export the app, not listen
 module.exports = app;
