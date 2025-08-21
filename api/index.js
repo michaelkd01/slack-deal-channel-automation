@@ -45,51 +45,7 @@ app.use('/api/slack', slackRoutes);
 app.use('/api/channels', channelRoutes);
 app.use('/api/config', configRoutes);
 
-// Root route - simple frontend
-app.get('/', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Slack Deal Automation</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
-            .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-            h1 { color: #333; }
-            .button { background: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin: 10px 0; }
-            .button:hover { background: #45a049; }
-            .api-link { background: #2196F3; }
-            .api-link:hover { background: #0b7dda; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>🚀 Slack Deal Automation</h1>
-            <p>Automate the creation and management of Slack channels for deal discussions with consistent naming conventions, automatic team member additions, and Salesforce integration capabilities.</p>
-            
-            <h3>Getting Started</h3>
-            <p>Click the button below to set up your Slack workspace integration:</p>
-            <a href="/api/slack/install" class="button">Install to Slack</a>
-            
-            <h3>API Health Check</h3>
-            <a href="/api/health" class="button api-link">Check API Status</a>
-            
-            <h3>Features</h3>
-            <ul>
-                <li>Automated Channel Creation with consistent naming</li>
-                <li>Team Management - automatically add default team members</li>
-                <li>Deal Templates with customizable first messages</li>
-                <li>Salesforce Integration ready</li>
-                <li>Web Interface for manual channel creation</li>
-            </ul>
-            
-            <p><em>Note: This is a simplified interface. The full React frontend is available for local development.</em></p>
-        </div>
-    </body>
-    </html>
-  `);
-});
+// API-only routes (React frontend will handle root routing)
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
