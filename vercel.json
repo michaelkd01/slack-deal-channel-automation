@@ -18,5 +18,7 @@
   ],
   "env": {
     "NODE_ENV": "production"
-  }
+  },
+  "framework": null,
+  "outputDirectory": null
 }
