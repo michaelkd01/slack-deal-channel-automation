@@ -9,9 +9,9 @@ const helmet = require('helmet');
 process.env.USE_MEMORY_STORAGE = 'true';
 
 // Import routes
-const slackRoutes = require('../src/routes/slack');
-const channelRoutes = require('../src/routes/channels');
-const configRoutes = require('../src/routes/config');
+const slackRoutes = require('../backend/routes/slack');
+const channelRoutes = require('../backend/routes/channels');
+const configRoutes = require('../backend/routes/config');
 
 const app = express();
 
@@ -102,7 +102,7 @@ app.get('/api/health', (req, res) => {
 // Debug endpoint to check connected workspaces
 app.get('/api/debug/workspaces', async (req, res) => {
   try {
-    const db = require('../src/models');
+    const db = require('../backend/models');
     const workspaces = await db.Workspace.findAll();
     res.json({ workspaces: workspaces.map(w => ({ id: w.id, name: w.slackTeamName, teamId: w.slackTeamId })) });
   } catch (error) {
