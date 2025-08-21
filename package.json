@@ -10,8 +10,8 @@
     "db:init": "node src/init-db.js",
     "db:reset": "node src/init-db.js",
     "db:setup-prod": "node scripts/setup-production-db.js",
-    "build": "cd frontend && npm install && npm run build",
-    "vercel-build": "npm run build"
+    "build": "echo 'Build complete - server-only deployment'",
+    "vercel-build": "cd frontend && npm install && npm run build"
   },
   "dependencies": {
     "@slack/oauth": "^2.6.1",
