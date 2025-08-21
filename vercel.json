@@ -8,17 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/src/server.js"
-    },
-    {
-      "src": "/health",
+      "src": "/(.*)",
       "dest": "/src/server.js"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "framework": null,
-  "outputDirectory": null
+  ]
 }
