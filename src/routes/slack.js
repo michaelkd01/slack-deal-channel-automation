@@ -3,10 +3,15 @@ const { InstallProvider } = require('@slack/oauth');
 const db = require('../models');
 const router = express.Router();
 
+// Simple in-memory state store for development
+const stateStore = new Map();
+
 const installer = new InstallProvider({
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   stateSecret: process.env.SESSION_SECRET || 'my-state-secret',
+  // Enable state verification in production
+  stateVerification: process.env.NODE_ENV === 'production',
   scopes: [
     'channels:manage',
     'channels:read',
