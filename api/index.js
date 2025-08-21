@@ -45,7 +45,55 @@ app.use('/api/slack', slackRoutes);
 app.use('/api/channels', channelRoutes);
 app.use('/api/config', configRoutes);
 
-// API-only routes (React frontend will handle root routing)
+// Simple frontend for production
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Slack Deal Automation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+            .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+            h1 { color: #333; }
+            .button { background: #4CAF50; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin: 10px 5px; }
+            .button:hover { background: #45a049; }
+            .api-button { background: #2196F3; }
+            .api-button:hover { background: #0b7dda; }
+            .debug-button { background: #FF9800; }
+            .debug-button:hover { background: #f57c00; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🚀 Slack Deal Automation</h1>
+            <p>Production-ready tool for automated Slack channel creation with consistent naming, team management, and Salesforce integration.</p>
+            
+            <h3>Setup</h3>
+            <a href="/api/slack/install" class="button">Install to Slack</a>
+            
+            <h3>API Endpoints</h3>
+            <a href="/api/health" class="button api-button">Health Check</a>
+            <a href="/api/debug/workspaces" class="button debug-button">View Workspaces</a>
+            <a href="/api/slack/workspaces" class="button api-button">API Workspaces</a>
+            
+            <h3>Features</h3>
+            <ul>
+                <li>✅ Automated Channel Creation with consistent naming</li>
+                <li>✅ Team Management - automatically add default team members</li>
+                <li>✅ Deal Templates with customizable first messages</li>
+                <li>✅ Salesforce Integration ready</li>
+                <li>✅ OAuth-secured workspace connection</li>
+            </ul>
+            
+            <h3>Development</h3>
+            <p>For the full React frontend, run locally: <code>npm start</code> in the frontend directory.</p>
+        </div>
+    </body>
+    </html>
+  `);
+});
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
