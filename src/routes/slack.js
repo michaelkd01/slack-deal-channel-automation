@@ -10,8 +10,8 @@ const installer = new InstallProvider({
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   stateSecret: process.env.SESSION_SECRET || 'my-state-secret',
-  // Enable state verification in production
-  stateVerification: process.env.NODE_ENV === 'production',
+  // Disable state verification in serverless environments where sessions don't persist
+  stateVerification: false,
   scopes: [
     'channels:manage',
     'channels:read',
