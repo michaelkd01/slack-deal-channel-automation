@@ -12,6 +12,15 @@ const installer = new InstallProvider({
   stateSecret: process.env.SESSION_SECRET || 'my-state-secret',
   // Disable state verification in serverless environments where sessions don't persist
   stateVerification: false,
+  // Add a simple state store that always returns true (since verification is disabled)
+  stateStore: {
+    generateStateParam: () => {
+      return 'dummy-state-' + Date.now();
+    },
+    verifyStateParam: () => {
+      return { result: true };
+    }
+  },
   scopes: [
     'channels:manage',
     'channels:read',
